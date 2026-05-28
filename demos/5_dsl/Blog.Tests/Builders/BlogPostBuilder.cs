@@ -110,4 +110,9 @@ public class BlogPostBuilder : IBuilder<BlogPost>
     {
         return Faker.Make(count, _ => Build());
     }
+
+    public static implicit operator BlogPost(BlogPostBuilder builder)
+    {
+        return builder.Build();
+    }
 }

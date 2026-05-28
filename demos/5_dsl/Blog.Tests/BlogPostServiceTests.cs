@@ -11,8 +11,8 @@ public class BlogPostServiceTests
     public void GetPublishedBlogPosts_ReturnsOnlyPublishedPosts()
     {
         // Arrange
-        var publishedPost = Create.PublishedPost().Build();
-        var unpublishedPost = Create.DraftPost().WithTitle("Unpublished Post").Build();
+        var publishedPost = Create.PublishedPost().WithTitle("Published Post");
+        var unpublishedPost = Create.DraftPost();
 
         var blogPosts = new List<BlogPost> { publishedPost, unpublishedPost };
         var blogPostService = new BlogPostService();
