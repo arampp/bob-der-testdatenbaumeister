@@ -11,18 +11,18 @@ public class BlogPostServiceTests
     public void GetPublishedBlogPosts_ReturnsOnlyPublishedPosts()
     {
         // Arrange
-        var publishedPost = Create.PublishedPost().WithTitle("Published Post").FromLastWeek().InCategory("Tech");
-        var unpublishedPost = Create.DraftPost().WithTitle("Unpublished Post");
-
-        var blogPosts = new List<BlogPost> { publishedPost, unpublishedPost };
+        var blogPosts = Create.BlogPosts()
+            .Where(5).Are(p => p.Published().WithTitle("Published Post"))
+            .And(3).Are(p => p.Draft().WithTitle("Unpublished Post"))
+            .Build();
         var blogPostService = new BlogPostService();
 
         // Act
         var result = blogPostService.GetPublishedPosts(blogPosts);
 
         // Assert
-        Assert.Single(result);
-        Assert.Equal("Published Post", result.First().Title);
+        Assert.All(result, post => Assert.True(post.IsPublished));
+        Assert.Equal(5, result.Count());
     }
 
     [Fact]

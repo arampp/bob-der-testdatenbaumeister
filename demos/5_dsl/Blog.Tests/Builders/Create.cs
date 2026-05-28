@@ -1,3 +1,5 @@
+using Blog.Models;
+
 namespace Blog.Tests.Builders;
 
 public static class Create
@@ -15,5 +17,10 @@ public static class Create
     public static BlogPostBuilder ScheduledPost()
     {
         return new BlogPostBuilder().WithIsPublished(false).WithPublishedDate(DateTime.Now.AddDays(7));
+    }
+
+    public static ConditionalCollectionBuilder<BlogPost, BlogPostBuilder> BlogPosts()
+    {
+        return new ConditionalCollectionBuilder<BlogPost, BlogPostBuilder>();
     }
 }

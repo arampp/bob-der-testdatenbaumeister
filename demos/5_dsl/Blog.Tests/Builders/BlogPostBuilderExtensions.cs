@@ -16,4 +16,13 @@ public static class BlogPostBuilderExtensions
     {
         return builder.WithPublishedDate(DateTime.Now.AddDays(-1));
     }
+
+    public static BlogPostBuilder Published(this BlogPostBuilder builder)
+    {
+        return builder.WithIsPublished(true).WithPublishedDate(DateTime.Now);
+    }
+    public static BlogPostBuilder Draft(this BlogPostBuilder builder)
+    {
+        return builder.WithIsPublished(false).WithPublishedDate(null);
+    }
 }
