@@ -13,6 +13,7 @@ public class BlogPostBuilder : IBuilder<BlogPost>
     private string? _title;
     private string? _slug;
     private bool? _isPublished;
+    private DateTime? _publishedDate;
     private List<Comment>? _comments;
 
     public BlogPostBuilder WithAuthor(Author author)
@@ -83,6 +84,12 @@ public class BlogPostBuilder : IBuilder<BlogPost>
         return this;
     }
 
+    public BlogPostBuilder WithPublishedDate(DateTime? publishedDate)
+    {
+        _publishedDate = publishedDate;
+        return this;
+    }
+
     public BlogPost Build()
     {
         return new BlogPost
@@ -95,6 +102,7 @@ public class BlogPostBuilder : IBuilder<BlogPost>
             Category = _category ?? new CategoryBuilder().Build(),
             IsPublished = _isPublished ?? Faker.Random.Bool(),
             Comments = _comments ?? new CommentBuilder().Build(Faker.Random.Int(0, 5)).ToList(),
+            PublishedDate = _publishedDate
         };
     }
 
