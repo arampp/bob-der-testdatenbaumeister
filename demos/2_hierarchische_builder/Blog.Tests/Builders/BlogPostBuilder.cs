@@ -6,13 +6,25 @@ public class BlogPostBuilder : IBuilder<BlogPost>
 {
     private Author _author = new AuthorBuilder().Build();
     private Category _category = new CategoryBuilder().Build();
-    private string _content = "Hey there, last week I attended a conference about the future of technology and I was " +
-     "blown away by the innovations that are coming our way. From AI to quantum computing, the possibilities are " +
-     "endless. I can't wait to see how these technologies will shape our world in the next few years.";
+    private string _content =
+        "Hey there, last week I attended a conference about the future of technology and I was "
+        + "blown away by the innovations that are coming our way. From AI to quantum computing, the possibilities are "
+        + "endless. I can't wait to see how these technologies will shape our world in the next few years.";
     private string _title = "The next big thing in tech.";
     private string _slug = "the-next-big-thing-in-tech";
     private bool _isPublished = false;
     private static int _currentId = 0;
+    private IEnumerable<Comment> _comments;
+
+    public BlogPostBuilder WithComments(
+        Action<CollectionBuilder<CommentBuilder, Comment>> configure
+    )
+    {
+        var collectionBuilder = new CollectionBuilder<CommentBuilder, Comment>();
+        configure(collectionBuilder);
+        _comments = collectionBuilder.Build();
+        return this;
+    }
 
     public BlogPostBuilder WithAuthor(Author author)
     {
@@ -60,7 +72,8 @@ public class BlogPostBuilder : IBuilder<BlogPost>
             Title = _title,
             Slug = _slug,
             Category = _category,
-            IsPublished = _isPublished
+            IsPublished = _isPublished,
+            Comments = _comments,
         };
     }
 }
